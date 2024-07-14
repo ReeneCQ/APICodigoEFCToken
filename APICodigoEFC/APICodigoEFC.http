@@ -1,0 +1,6 @@
+@APICodigoEFC_HostAddress = http://localhost:5079
+
+GET {{APICodigoEFC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
