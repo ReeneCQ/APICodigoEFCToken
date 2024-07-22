@@ -19,7 +19,8 @@ namespace APICodigoEFC.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        // LO HACE PUBLICO ALLOWANONYMUS
+        //[AllowAnonymous]
         public List<Product> GetByFilters(string? name)
         {
             IQueryable<Product> query = _context.Products.Where(p => p.IsActive);

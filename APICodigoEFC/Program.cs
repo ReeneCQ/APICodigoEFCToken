@@ -59,8 +59,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 // 5- // Habilitar middleware de autenticación y autorización
 app.UseAuthentication();
 app.UseAuthorization();
