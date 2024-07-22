@@ -7,7 +7,7 @@
         public string Description { get; set; }
 
         public int CustomerID { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual Customer? Customer { get; set; }
 
         public bool IsActive { get; set; }
     }
