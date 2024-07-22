@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Configuración de Autenticación JWT en ASP.NET Core
+// Configuración de Autenticación JWT en ASP.NET Core (configurar token)
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,6 +59,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
+
+// 5- // Habilitar middleware de autenticación y autorización
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
