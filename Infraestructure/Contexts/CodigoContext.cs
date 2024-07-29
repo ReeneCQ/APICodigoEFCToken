@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace APICodigoEFC.Models
+namespace Infraestructure.Contexts
 {
     public class CodigoContext : DbContext
     {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace APICodigoEFC.Migrations
+namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
     public partial class v3_isactiveyfkinvoiceproduct : Migration

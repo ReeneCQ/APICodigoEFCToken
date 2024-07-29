@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace APICodigoEFC.Migrations
+namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
     public partial class v5_createDate : Migration

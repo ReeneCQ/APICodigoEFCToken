@@ -1,4 +1,5 @@
-﻿using APICodigoEFC.Models;
+﻿using APICodigoEFC.Contexts;
+using APICodigoEFC.Models;
 using APICodigoEFC.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +21,7 @@ namespace APICodigoEFC.Controllers
 
         [HttpGet]
         // LO HACE PUBLICO ALLOWANONYMUS
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public List<Product> GetByFilters(string? name)
         {
             IQueryable<Product> query = _context.Products.Where(p => p.IsActive);
