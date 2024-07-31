@@ -1,7 +1,10 @@
-﻿using APICodigoEFC.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Infraestructure.Contexts;
+using Domain.Models;
+using APICodigoEFC.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Services.Services;
+
 
 namespace APICodigoEFC.Controllers
 {
@@ -9,32 +12,32 @@ namespace APICodigoEFC.Controllers
     [ApiController]
     public class InvoicesController : ControllerBase
     {
-
-        private readonly CodigoContext _context;
+        private readonly InvoicesService _service;
 
         public InvoicesController(CodigoContext context)
         {
-            _context = context;
+            _service = new InvoicesService(context);
         }
 
         [HttpGet]
         public List<Invoice> GetByFilters(string? number)
         {
-            IQueryable<Invoice> query = _context.Invoices.Include(x => x.Customer).Where(x => x.IsActive);
-
-            if (!string.IsNullOrEmpty(number))
-                query = query.Where(x => x.Number.Contains(number));
-
-
-            return query.ToList();
+            return _service.GetByFilters(number);
         }
 
         [HttpPost]
-        public void Insert([FromBody] Invoice invoice)
+        public void Insert([FromBody] InvoiceInsertRequest request)
         {
-            _context.Invoices.Add(invoice);
-            _context.SaveChanges();
-        }
+            // Convertir el request a modelo Invoice
+            Invoice invoice = new Invoice
+            {
+                Number = request.Number,
+                Description = request.Description,
+                CustomerID = request.CustomerID,
+                IsActive = true
+            };
 
+            _service.Insert(invoice);
+        }
     }
 }

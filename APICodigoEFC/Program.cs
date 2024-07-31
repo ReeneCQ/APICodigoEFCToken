@@ -1,4 +1,4 @@
-using Infraestructure.Context;
+using Infraestructure.Contexts;
 using Domain.Models;
 using APICodigoEFC.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

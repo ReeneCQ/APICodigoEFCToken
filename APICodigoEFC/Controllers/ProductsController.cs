@@ -1,5 +1,5 @@
-﻿using APICodigoEFC.Contexts;
-using APICodigoEFC.Models;
+﻿using Infraestructure.Contexts;
+using Domain.Models;
 using APICodigoEFC.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,4 +1,5 @@
-﻿using APICodigoEFC.Models;
+﻿using Domain.Models;
+using Infraestructure.Contexts;
 using APICodigoEFC.Request;
 using APICodigoEFC.Response;
 using APICodigoEFC.Utility;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Services.Services;
 
 namespace APICodigoEFC.Controllers
 {
@@ -14,58 +16,59 @@ namespace APICodigoEFC.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CodigoContext _context;
+        private CustomersService _service;
+
         public CustomersController(CodigoContext context)
         {
             _context = context;
+            _service = new CustomersService(_context);
         }
 
         [HttpGet]
         public List<Customer> GetByFilters(string? name, string? documentNumber)
         {
-            IQueryable<Customer> query = _context.Customers.Where(x => x.IsActive);
-            if (!string.IsNullOrEmpty(name))
-                query = query.Where(x => x.Name.Contains(name));
-            if (!string.IsNullOrEmpty(documentNumber))
-                query = query.Where(x => x.DocumentNumber.Contains(documentNumber));
-
-            //recien busca en la base de datos
-            return query.ToList();
+            var customers = _service.GetByFilters(name, documentNumber);
+            return customers;
         }
 
         [HttpPost]
         public void Insert([FromBody] Customer customer)
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            _service.Insert(customer);
+
         }
+
+
         [HttpPut]
         public void Update([FromBody] Customer customer)
         {
-            _context.Entry(customer).State = EntityState.Modified;
-            _context.SaveChanges();
+            _service.Update(customer);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
         }
 
         [HttpPut]
         public ResponseBase UpdateName([FromBody] CustomerUpdateRequest request)
         {
             ResponseBase response = new ResponseBase();
+            int code = 0;
 
             try
             {
+                response.Code = 0;
+                response.Message = "Registro exitoso";
 
-                var customer = _context.Customers.Find(request.Id);
-                if (customer == null)
+                code = _service.UpdateName(request.Id, request.Name);
+
+                if (code != 0)
                 {
-                    response.Code = -1001;
-                    response.Message = ValidationsValues.ExistCustomer;
-                    return response;
+                    response.Message = "Error Controlado";
+                    response.Code = code;
                 }
-                customer.Name = request.Name;
-                _context.Entry(customer).State = EntityState.Modified;
-                _context.SaveChanges();
-
-                response.Message = ValidationsValues.CorrectUpdate;
-
                 return response;
 
             }
@@ -78,18 +81,6 @@ namespace APICodigoEFC.Controllers
             }
 
 
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            //Eliminación Física  
-            //_context.Customers.Remove(customer);
-
-            var customer = _context.Customers.Find(id);
-            customer.IsActive = false;
-            _context.Entry(customer).State = EntityState.Modified;
-            _context.SaveChanges();
         }
 
 
