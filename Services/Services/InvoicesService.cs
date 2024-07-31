@@ -23,17 +23,11 @@ namespace Services.Services
             if (!string.IsNullOrEmpty(number))
                 query = query.Where(x => x.Number.Contains(number));
 
-            return query.Include(x => x.Customer).ToList(); // Incluye la relación con Customer
+            return query.Include(x => x.Customer).ToList();
         }
 
         public void Insert(Invoice invoice)
         {
-            if (invoice == null)
-            {
-                // Aquí podrías lanzar una excepción o manejar el error según sea necesario
-                throw new ArgumentNullException(nameof(invoice), "Invoice cannot be null");
-            }
-
             _context.Invoices.Add(invoice);
             _context.SaveChanges();
         }

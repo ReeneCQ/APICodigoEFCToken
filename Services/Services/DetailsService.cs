@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Infraestructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Peticioness.Response;
 using Peticioness.Utility;
 using System;
@@ -29,11 +30,12 @@ namespace Services.Services
 
         public List<Detail> Get()
         {
-            return _context.Details
+            IQueryable<Detail> query = _context.Details
                 .Include(x => x.Product)
                 .Include(x => x.Invoice).ThenInclude(y => y.Customer)
-                .Where(x => x.IsActive)
-                .ToList();
+                .Where(x => x.IsActive);
+
+            return query.ToList();
         }
 
         public List<Detail> GetByFilters(string? customerName, string? invoiceNumber)
@@ -61,9 +63,11 @@ namespace Services.Services
             if (!string.IsNullOrEmpty(invoiceNumber))
                 query = query.Where(x => x.Invoice.Number.Contains(invoiceNumber));
 
+            // Todos los detalles del modelo
             var details = query.ToList();
 
-            return details
+            // Convertir modelo al response
+            var response = details
                 .Select(x => new DetailResponseV1
                 {
                     InvoiceNumber = x.Invoice.Number,
@@ -71,7 +75,10 @@ namespace Services.Services
                     SubTotal = x.SubTotal
                 })
                 .ToList();
+
+            return response;
         }
+
 
         public List<DetailResponseV2> GetByInvoiceNumber2(string? invoiceNumber)
         {
@@ -83,9 +90,11 @@ namespace Services.Services
             if (!string.IsNullOrEmpty(invoiceNumber))
                 query = query.Where(x => x.Invoice.Number.Contains(invoiceNumber));
 
+            // Todos los detalles del modelo
             var details = query.ToList();
 
-            return details
+            // Convertir modelo al response
+            var response = details
                 .Select(x => new DetailResponseV2
                 {
                     InvoiceNumber = x.Invoice.Number,
@@ -95,7 +104,10 @@ namespace Services.Services
                     IGV = x.Amount * x.Price * ConstantValues.IGV
                 })
                 .ToList();
+
+            return response;
         }
+
     }
 }
 
