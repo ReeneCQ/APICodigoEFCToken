@@ -1,4 +1,4 @@
-﻿namespace APICodigoEFC.Response
+﻿namespace Peticioness.Response
 {
     public class DetailResponseV1
     {

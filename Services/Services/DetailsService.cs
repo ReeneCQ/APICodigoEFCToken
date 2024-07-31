@@ -1,8 +1,8 @@
 ﻿using Domain.Models;
 using Infraestructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using APICodigoEFC.Response;
-using APICodigoEFC.Utility;
+using Peticioness.Response;
+using Peticioness.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;

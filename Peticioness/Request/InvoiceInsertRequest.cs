@@ -1,4 +1,4 @@
-﻿namespace APICodigoEFC.Request
+﻿namespace Peticioness.Request
 {
     public class InvoiceInsertRequest
     {

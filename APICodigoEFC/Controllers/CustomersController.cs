@@ -1,8 +1,8 @@
 ﻿using Domain.Models;
 using Infraestructure.Contexts;
-using APICodigoEFC.Request;
-using APICodigoEFC.Response;
-using APICodigoEFC.Utility;
+using Peticioness.Request;
+using Peticioness.Response;
+using Peticioness.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

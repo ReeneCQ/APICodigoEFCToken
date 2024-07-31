@@ -1,5 +1,5 @@
-﻿namespace APICodigoEFC.Request
-{
+﻿namespace Peticioness.Request
+{ 
     public class ProductUpdateRequest
     {
         public int Id { get; set; }

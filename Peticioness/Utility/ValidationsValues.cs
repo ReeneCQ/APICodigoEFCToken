@@ -1,4 +1,4 @@
-﻿namespace APICodigoEFC.Utility
+﻿namespace Peticioness.Utility
 {
     public class ValidationsValues
     {
